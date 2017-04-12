@@ -1,4 +1,4 @@
-# jupyter-kernel-jshell
+# jupyter-kernel-java9-jshell
 
 This is forked from fiber-space/jupyter-kernel-jsr223
 The original jsr233 implementation was done by kay schluehr.
