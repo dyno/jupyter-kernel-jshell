@@ -15,14 +15,15 @@
  */
 package org.jupyterkernel.console;
 
+import org.json.XML;
+import org.jupyterkernel.json.messages.T_kernel_info_reply;
+import org.jupyterkernel.json.messages.T_language_info;
+
+import javax.script.ScriptException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.script.ScriptException;
-import org.json.XML;
-import org.jupyterkernel.json.messages.T_kernel_info_reply;
-import org.jupyterkernel.json.messages.T_language_info;
 
 /**
  *

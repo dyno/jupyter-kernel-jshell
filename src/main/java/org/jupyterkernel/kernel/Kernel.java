@@ -15,18 +15,32 @@
  */
 package org.jupyterkernel.kernel;
 
-import org.jupyterkernel.console.InteractiveConsole;
-import org.jupyterkernel.json.messages.*;
-import javax.script.*;
-import java.util.ArrayDeque;
-
-import java.lang.reflect.*;
 import org.json.JSONArray;
-
 import org.json.JSONObject;
-import org.jupyterkernel.console.ConsoleFactory;
 import org.jupyterkernel.console.ConsoleInputReader;
+import org.jupyterkernel.console.JShellConsole;
 import org.jupyterkernel.console.JupyterStreamWriter;
+import org.jupyterkernel.json.messages.T_comm_close;
+import org.jupyterkernel.json.messages.T_comm_open;
+import org.jupyterkernel.json.messages.T_complete_reply;
+import org.jupyterkernel.json.messages.T_complete_request;
+import org.jupyterkernel.json.messages.T_connect_reply;
+import org.jupyterkernel.json.messages.T_execute_reply;
+import org.jupyterkernel.json.messages.T_execute_reply_err;
+import org.jupyterkernel.json.messages.T_execute_reply_ok;
+import org.jupyterkernel.json.messages.T_execute_request;
+import org.jupyterkernel.json.messages.T_execute_result;
+import org.jupyterkernel.json.messages.T_header;
+import org.jupyterkernel.json.messages.T_history_reply;
+import org.jupyterkernel.json.messages.T_input_request;
+import org.jupyterkernel.json.messages.T_inspect_reply;
+import org.jupyterkernel.json.messages.T_message;
+import org.jupyterkernel.json.messages.T_shutdown_request;
+import org.jupyterkernel.json.messages.T_stream;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayDeque;
 
 /**
  *
@@ -73,9 +87,8 @@ public class Kernel extends Thread {
         }
     }
 
-    ScriptEngineManager manager;
-    ScriptEngine engine;
-    InteractiveConsole console;
+
+    JShellConsole console;
     String kernel;
 
     JSONObject connectionData;
@@ -98,7 +111,7 @@ public class Kernel extends Thread {
 
     public Kernel(String name) {
         kernel = name;
-        console = ConsoleFactory.createConsole(name);
+        console = new JShellConsole();
     }
 
     public String getKernel() {
@@ -230,8 +243,7 @@ public class Kernel extends Thread {
 
         String res = console.readAndClearStdout();
         String err = console.readAndClearStderr();
-        
-        if(obj!=null)
+
         {
             res = obj.toString();
         }

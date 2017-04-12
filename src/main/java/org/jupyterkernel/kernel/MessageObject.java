@@ -15,23 +15,21 @@
  */
 package org.jupyterkernel.kernel;
 
-import java.nio.charset.StandardCharsets;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.lang.StringBuilder;
-import javax.xml.bind.DatatypeConverter;
-
 import org.json.JSONObject;
 import org.jupyterkernel.json.messages.T_JSON;
 import org.jupyterkernel.json.messages.T_header;
-import org.zeromq.ZMQ.Socket;
-import org.zeromq.ZMsg;
-import org.zeromq.ZFrame;
 import org.jupyterkernel.json.messages.T_message;
 import org.jupyterkernel.util.UUID;
+import org.zeromq.ZFrame;
+import org.zeromq.ZMQ.Socket;
+import org.zeromq.ZMsg;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  *

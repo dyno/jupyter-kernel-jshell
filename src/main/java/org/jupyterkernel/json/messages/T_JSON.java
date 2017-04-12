@@ -5,31 +5,30 @@
  */
 package org.jupyterkernel.json.messages;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jupyterkernel.util.JSONField;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
- *
  * @author kay schluehr
  */
 public class T_JSON {
     public static String message_protocol_version = null;
-    
+
     private static double protocol_version = 0.0;
-    
-    public static void setProtocolVersion(String protocolVersion)
-    {
+
+    public static void setProtocolVersion(String protocolVersion) {
         message_protocol_version = protocolVersion;
         protocol_version = Double.parseDouble(protocolVersion);
-        
+
     }
-    
+
 
     public static T_JSON fromJSON(String classname, JSONObject jsonObj) {
 
@@ -54,7 +53,7 @@ public class T_JSON {
         for (Field field : fields) {
             JSONField jsonField = field.getAnnotation(JSONField.class);
             if (jsonField != null) {
-                String name = field.getName();                
+                String name = field.getName();
                 try {
                     value = jsonObj.get(name);
                 } catch (JSONException e) {
@@ -75,24 +74,19 @@ public class T_JSON {
         }
         return instance;
     }
-    
-    private boolean checkVersion(String versionString)
-    {
-        int n = versionString.length()-1;
+
+    private boolean checkVersion(String versionString) {
+        int n = versionString.length() - 1;
         char qual = versionString.charAt(n);
         double version = Double.parseDouble(versionString.substring(0, n));
-        switch(qual)
-        {
-            case '+':
-            {
-                return (protocol_version>=version);
+        switch (qual) {
+            case '+': {
+                return (protocol_version >= version);
             }
-            case '-':
-            {
-                return (protocol_version<version);
+            case '-': {
+                return (protocol_version < version);
             }
-            default:
-            {
+            default: {
                 return true;
             }
         }
@@ -108,8 +102,7 @@ public class T_JSON {
                 String name = field.getName();
                 String fieldType = jsonField.type();
                 String version = jsonField.version();
-                if(!checkVersion(version))
-                {
+                if (!checkVersion(version)) {
                     // skip the value which is not part of the JSON message
                     continue;
                 }
@@ -146,7 +139,9 @@ public class T_JSON {
                     }
 
                     case "T_JSON": {
-                        jsonObj.put(name, ((T_JSON) value).toJSON());
+                        if (value != null) {
+                            jsonObj.put(name, ((T_JSON) value).toJSON());
+                        }
                         break;
                     }
 

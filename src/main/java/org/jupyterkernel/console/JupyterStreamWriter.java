@@ -15,10 +15,10 @@
  */
 package org.jupyterkernel.console;
 
-import java.util.ArrayDeque;
-import java.io.StringWriter;
 import org.jupyterkernel.json.messages.T_stream;
 import org.jupyterkernel.kernel.MessageObject;
+
+import java.io.StringWriter;
 import java.util.Timer;
 import java.util.TimerTask;
 
