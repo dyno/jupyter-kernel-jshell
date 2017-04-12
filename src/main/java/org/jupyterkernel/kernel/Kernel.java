@@ -243,8 +243,7 @@ public class Kernel extends Thread {
 
         String res = console.readAndClearStdout();
         String err = console.readAndClearStderr();
-
-        {
+        if(obj!=null) {
             res = obj.toString();
         }
 

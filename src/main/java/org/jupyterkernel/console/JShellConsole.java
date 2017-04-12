@@ -19,7 +19,9 @@ package org.jupyterkernel.console;
  * @author kay schluehr, thomas kratz
  */
 
+import jdk.jshell.EvalException;
 import jdk.jshell.JShell;
+import jdk.jshell.JShellException;
 import jdk.jshell.SnippetEvent;
 import jdk.jshell.SourceCodeAnalysis.Completeness;
 import jdk.jshell.SourceCodeAnalysis.CompletionInfo;
@@ -68,8 +70,23 @@ public class JShellConsole {
 
     public JShellConsole() {
         jshell = JShell.builder().out(new PrintStream(new WriterOutputStream(stdoutWriter, Charset.defaultCharset(), 100, true)))
-                .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset()))).build();
+                .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset())))
+        .build();
 
+
+
+
+        jshell.addToClasspath("dependency/hibernate-core-5.2.9.Final.jar");
+        jshell.addToClasspath("dependency/jboss-logging-3.3.0.Final.jar");
+        jshell.addToClasspath("dependency/hibernate-jpa-2.1-api-1.0.0.Final.jar");
+        jshell.addToClasspath("dependency/javassist-3.20.0-GA.jar");
+        jshell.addToClasspath("dependency/antlr-2.7.7.jar");
+        jshell.addToClasspath("dependency/jboss-transaction-api_1.2_spec-1.0.1.Final.jar");
+        jshell.addToClasspath("dependency/jandex-2.0.3.Final.jar");
+        jshell.addToClasspath("dependency/classmate-1.3.0.jar");
+        jshell.addToClasspath("dependency/dom4j-1.6.1.jar");
+        jshell.addToClasspath("dependency/hibernate-commons-annotations-5.0.1.Final.jar");
+        jshell.addToClasspath("dependency/h2-1.4.194.jar");
     }
 
     public void setStdinReader(ConsoleInputReader reader) {
@@ -104,7 +121,7 @@ public class JShellConsole {
     }
 
     protected void setErrorMessage() {
-        ex.printStackTrace(new PrintWriter(stderrWriter));
+        ex.printStackTrace(new PrintWriter(stdoutWriter));
     }
 
     public String[] getTraceback() {
@@ -131,8 +148,20 @@ public class JShellConsole {
                 for (SnippetEvent evt : snippetEvents) {
 
                     jshell.diagnostics(evt.snippet()).forEach(snip -> stderrWriter.append(snip.getMessage(Locale.ENGLISH)));
-
+                    JShellException e = evt.exception();
+                    if (e != null) {
+                        e.printStackTrace(new PrintWriter(stderrWriter));
+                        if(e instanceof EvalException){
+                            EvalException eve = (EvalException)e;
+                            stderrWriter.append(eve.getExceptionClassName());
+                            stderrWriter.append(" "+eve.getMessage());
+                            for(Throwable t :eve.getSuppressed()){
+                                t.printStackTrace();
+                            }
+                        }
+                    }
                 }
+
                 codeString = completionInfo.remaining();
                 if (codeString.isEmpty()) {
                     break;
@@ -140,6 +169,7 @@ public class JShellConsole {
             }
 
         } catch (Exception e) {
+            e.printStackTrace();
             ex = e;
             setErrorMessage();
         }
