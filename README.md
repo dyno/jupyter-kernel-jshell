@@ -14,7 +14,7 @@ This project is a Java implementation of the Jupyter messaging protocol,
 ### Building the project
 
 After having cloned this project repository, switch to the project directory and build the project 
-with ant
+with a recent maven
 
 	~/home/my/repo/to/jupyter-kernel-jshell $ mvn clean package
 
