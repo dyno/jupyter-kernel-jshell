@@ -1,10 +1,12 @@
 {
- "argv": ["java",
-          "-classpath",
-              "$PATH_TO_INTERPRETER_JAR:$PATH_TO_JUPYTER_KERNEL_JAR",
-          "org.jupyterkernel.kernel.Session",
-              "-k", "$LANGUAGE_NAME_USED_BY_SCRIPT_ENGINE",
-              "-f", "{connection_file}"],
- "display_name": "$NAMED_DISPLAYED_BY_NOTEBOOK",
- "language": "$LANGUAGE_NAME"
+  "argv": ["java",
+    "--add-modules",
+    "java.xml.bind",
+    "-jar",
+
+    "/PATH_TO_KERNEL/jupyter-kernel-jshell-1.0-SNAPSHOT.jar",
+    "-f", "{connection_file}"],
+  "display_name": "Java 9",
+  "language": "java"
 }
+
