@@ -24,13 +24,12 @@ The project directory should now contain a `target` folder showing the following
 ( modulo changes in version numbers ):
 
 	target
-	├── javadoc
 	├── jupyter-kernel-jshell-1.0-SNAPSHOT.jar
 	├── dependency
 	│   ├── commons-cli-1.2.jar
 	│   ├── jeromq-0.3.6.jar
-	│   └── json.jar
-	└── README.TXT
+	│   └── ...
+	
 
 ### Installing kernels and kernel specs
 
