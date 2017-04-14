@@ -1,7 +1,5 @@
 {
   "argv": ["java",
-    "--add-modules",
-    "java.xml.bind",
     "-jar",
 
     "/PATH_TO_KERNEL/jupyter-kernel-jshell-1.0-SNAPSHOT.jar",
