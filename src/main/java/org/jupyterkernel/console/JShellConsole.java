@@ -29,6 +29,7 @@ import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.commons.io.output.WriterOutputStream;
 import org.jupyterkernel.json.messages.T_kernel_info_reply;
 
+import java.io.File;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -68,9 +69,16 @@ public class JShellConsole {
         System.out.println("Classpath is " + strClassPath);
     }
 
-    public JShellConsole() {
+    public JShellConsole(String classpath) {
         jshell = JShell.builder().out(new PrintStream(new WriterOutputStream(stdoutWriter, Charset.defaultCharset(), 100, true)))
                 .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset()))).build();
+        if (classpath != null) {
+            File dir = new File(classpath);
+            File[] libs = dir.listFiles();
+            for (File lib : libs) {
+                jshell.addToClasspath(lib.getAbsolutePath());
+            }
+        }
 
     }
 
