@@ -74,7 +74,7 @@ public class JShellConsole {
 
                 .out(new PrintStream(new WriterOutputStream(stdoutWriter, Charset.defaultCharset(), 100, true)))
                 .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset())))
-
+                .remoteVMOptions("--add-opens java.base/java.lang=ALL-UNNAMED")
                 .build();
         if (classpath != null) {
             File dir = new File(classpath);
