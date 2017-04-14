@@ -70,8 +70,12 @@ public class JShellConsole {
     }
 
     public JShellConsole(String classpath) {
-        jshell = JShell.builder().out(new PrintStream(new WriterOutputStream(stdoutWriter, Charset.defaultCharset(), 100, true)))
-                .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset()))).build();
+        jshell = JShell.builder()
+
+                .out(new PrintStream(new WriterOutputStream(stdoutWriter, Charset.defaultCharset(), 100, true)))
+                .err(new PrintStream(new WriterOutputStream(stderrWriter, Charset.defaultCharset())))
+
+                .build();
         if (classpath != null) {
             File dir = new File(classpath);
             File[] libs = dir.listFiles();
@@ -79,6 +83,7 @@ public class JShellConsole {
                 jshell.addToClasspath(lib.getAbsolutePath());
             }
         }
+
 
     }
 
