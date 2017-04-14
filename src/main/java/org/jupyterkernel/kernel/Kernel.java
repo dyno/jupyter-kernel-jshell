@@ -109,9 +109,9 @@ public class Kernel extends Thread {
 
     ExecuteRequestHandler execute_request_handler = new ExecuteRequestHandler();
 
-    public Kernel(String name) {
+    public Kernel(String name, String classpath) {
         kernel = name;
-        console = new JShellConsole();
+        console = new JShellConsole(classpath);
     }
 
     public String getKernel() {

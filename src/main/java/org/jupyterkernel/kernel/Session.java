@@ -243,14 +243,17 @@ public class Session extends Thread {
         if (args.length > 0) {
             String connectionFilePath;
             String kernelName;
+            String classpath;
             Options options = new Options();
             options.addOption("f", true, "connection file path");
             options.addOption("k", true, "kernel name");
+            options.addOption("cp", true,"classpathdir");
             CommandLineParser parser = new PosixParser();
             try {
                 CommandLine cmd = parser.parse(options, args);
                 connectionFilePath = cmd.getOptionValue("f");
                 kernelName = cmd.getOptionValue("k");
+                classpath = cmd.getOptionValue("cp");
             } catch (ParseException e) {
                 e.printStackTrace(System.out);
                 return;
@@ -262,7 +265,7 @@ public class Session extends Thread {
                 System.out.println(connectionData.toString(4));
             }
 
-            Session session = new Session(connectionData, new Kernel(kernelName));
+            Session session = new Session(connectionData, new Kernel(kernelName, classpath));
 
             try {
                 session.start();
