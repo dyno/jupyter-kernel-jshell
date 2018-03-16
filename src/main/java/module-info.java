@@ -2,7 +2,7 @@
  * Created by thomas on 12.04.17.
  */
 module jupyter.kernel.jshell {
-    requires java.xml.bind;
+    //requires java.xml.bind;
     requires jeromq;
     requires json;
     requires java.logging;
